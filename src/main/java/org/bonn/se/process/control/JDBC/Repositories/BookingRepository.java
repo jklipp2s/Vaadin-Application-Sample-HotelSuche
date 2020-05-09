@@ -2,7 +2,6 @@ package org.bonn.se.process.control.JDBC.Repositories;
 
 import org.bonn.se.model.factories.BookingFactory;
 import org.bonn.se.model.objects.dto.BookingDetail;
-import org.bonn.se.model.objects.entities.Hotel;
 import org.bonn.se.model.objects.entities.User;
 import org.bonn.se.model.objects.entities.Booking;
 import org.bonn.se.process.control.JDBC.DataBaseConnection;
@@ -102,7 +101,8 @@ public abstract class BookingRepository {
             while(resultSet.next()) {
 
             int id = resultSet.getInt("id");
-            Date anreise = resultSet.getDate("anreise");
+                String customer = resultSet.getString("name");
+                Date anreise = resultSet.getDate("anreise");
             Date abreise = resultSet.getDate("abreise");
             int anzahl = resultSet.getInt("anzahlpersonen");
             Date datumBuchung = resultSet.getDate("datumbuchung");
@@ -112,12 +112,53 @@ public abstract class BookingRepository {
 
 
 
-                bookings.add(BookingFactory.createBookingDetail(id, anreise, abreise, hotel, anzahl, datumBuchung));
+                bookings.add(BookingFactory.createBookingDetail(id, customer, anreise, abreise, hotel, anzahl, datumBuchung));
 
 
 
             }
 
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            System.out.println(sql);
+        }
+
+
+        return bookings;
+    }
+
+
+
+
+
+
+    public static List<BookingDetail> getAllBookings() throws DataBaseException {
+        DataBaseConnection.getSqlConnection();
+        Statement statement = DataBaseConnection.getStatement();
+        ResultSet resultSet = null;
+        List<BookingDetail> bookings = new ArrayList<>();
+
+        String sql = "SELECT * FROM " + TableNames.Views.DBS_BOOKING_VIEW + ";";
+
+        try {
+            resultSet = statement.executeQuery(sql);
+
+
+            while(resultSet.next()) {
+
+                int id = resultSet.getInt("id");
+                String customer = resultSet.getString("name");
+                Date anreise = resultSet.getDate("anreise");
+                Date abreise = resultSet.getDate("abreise");
+                int anzahl = resultSet.getInt("anzahlpersonen");
+                Date datumBuchung = resultSet.getDate("datumbuchung");
+                String hotel = resultSet.getString("hotel");
+
+
+                bookings.add(BookingFactory.createBookingDetail(id, customer, anreise, abreise, hotel, anzahl, datumBuchung));
+
+            }
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

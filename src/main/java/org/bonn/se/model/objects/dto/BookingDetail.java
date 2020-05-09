@@ -4,8 +4,12 @@ import java.time.LocalDate;
 
 public class BookingDetail {
     private int id;
+    private String customername;
     private LocalDate anreise;
     private LocalDate abreise;
+
+
+
     private LocalDate datumBuchung;
     private int number;
     private String hotel;
@@ -15,8 +19,9 @@ public class BookingDetail {
 
     }
 
-    public BookingDetail(int id, LocalDate anreise, LocalDate abreise, LocalDate datumBuchung, int number, String hotel, String user) {
+    public BookingDetail(int id, String customername, LocalDate anreise, LocalDate abreise, LocalDate datumBuchung, int number, String hotel, String user) {
         this.id = id;
+        this.customername = customername;
         this.anreise = anreise;
         this.abreise = abreise;
         this.datumBuchung = datumBuchung;
@@ -80,4 +85,14 @@ public class BookingDetail {
     public void setUser(String user) {
         this.user = user;
     }
+
+    public String getCustomername() { return customername;
+    }
+
+    public void setCustomername(String customername) { this.customername = customername;
+    }
+
+
+
+
 }

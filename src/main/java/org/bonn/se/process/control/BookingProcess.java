@@ -77,4 +77,20 @@ public class BookingProcess {
             return bookings;
         }
     }
+
+    public List<BookingDetail> getAllBookings() {
+        List<BookingDetail> bookings = new ArrayList<>();
+
+        try {
+            bookings = BookingRepository.getAllBookings();
+        } catch (DataBaseException e) {
+            e.printStackTrace();
+        }
+        finally {
+            return bookings;
+        }
+    }
+
+
+
 }

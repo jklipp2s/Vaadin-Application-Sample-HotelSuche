@@ -21,10 +21,12 @@ public class ListBookingWindow extends Window {
         VerticalLayout layout = new VerticalLayout();
 
         User user = ((MyUI) UI.getCurrent()).getUser();
-        liste = BookingProcess.getInstance().getAllBookingsForUser(user);
+
+        liste = user.hasRole(Roles.ADMIN) ? BookingProcess.getInstance().getAllBookings() : BookingProcess.getInstance().getAllBookingsForUser(user);
 
         final Grid<BookingDetail> data = new Grid<>();
         data.addColumn(BookingDetail::getId).setCaption("nr");
+        if(user.hasRole(Roles.ADMIN)) data.addColumn(BookingDetail::getCustomername).setCaption("Kunde");
         data.addColumn(BookingDetail::getHotel).setCaption("Hotel");
         data.addColumn(BookingDetail::getAnreise).setCaption("Anreise");
         data.addColumn(BookingDetail::getAbreise).setCaption("Abreise");

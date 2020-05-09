@@ -62,6 +62,10 @@ public class TopPanel extends HorizontalLayout {
         }
 
 
+        if(user.hasRole(Roles.ADMIN)){
+        }
+
+
 
 
 
