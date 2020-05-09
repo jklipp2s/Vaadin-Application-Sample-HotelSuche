@@ -26,8 +26,13 @@ public class AdminClass {
             DataBaseConnection.setUPConnection(ConnectionTypes.CONNECTION_TYPE_PostgreSQL);
 
 
-            UserToRoleRepository.insertIntoTable_User_To_Role("walterkle", Roles.NORMAL_USER);
+            UserRepository.update();
 
+            User user = UserRepository.getAllRegisteredUsers().get(0);
+
+            boolean test = user.getRoles().contains(Roles.ADMIN);
+
+            System.out.println(test);
 
         } catch (DataBaseException e) {
 

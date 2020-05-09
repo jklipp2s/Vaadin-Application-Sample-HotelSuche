@@ -57,18 +57,6 @@ public class User implements Serializable {
     }
 
 
-    @Override
-    public String toString() {
-        return
-                "username='" + username + '\'' +
-                ", password=" + password;
-    }
-
-
-    private void loadRoles() {
-      // roles = UserToRoleRepository.getRoles();
-    }
-
 
     public int getId() {
         return id;
@@ -84,20 +72,19 @@ public class User implements Serializable {
 
     public String getName() { return name; }
 
-    public List<String> getRoles() { return this.roles; }
+    public List<String> getRoles()  {
+
+        try {
+
+            if (roles == null) roles = UserToRoleRepository.getRoles(this);
+
+        } catch (DataBaseException e) {
+            e.printStackTrace();
+        }
+        return this.roles; }
 
     public boolean hasRole(String role) {
-        boolean b = false;
-        try {
-            b = UserToRoleRepository.UserhasRole(this.username, role);
-        } catch (DataBaseException e) {
-            System.out.println("Hat nicht die Entsprechende Rolle");
-        }
-
-        finally {
-            return b;
-        }
-
+        return this.getRoles().contains(role);
     }
 
 
