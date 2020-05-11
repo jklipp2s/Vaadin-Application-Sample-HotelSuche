@@ -88,5 +88,22 @@ public class User implements Serializable {
     }
 
 
+    public String getFullname() {
+        return this.name + " " + this.prename;
+    }
+
+    public String getRolesAsList() {
+        getRoles();
+        String result = "";
+        for (int i = 0; i < roles.size(); i++) {
+            result += " " + roles.get(i);
+
+            if(i<roles.size()-1) result += ",";
+
+        }
+        return result;
+    }
+
+
 
 }

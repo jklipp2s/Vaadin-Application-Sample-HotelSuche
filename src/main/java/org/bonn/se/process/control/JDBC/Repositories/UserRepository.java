@@ -219,9 +219,8 @@ public abstract class UserRepository {
 
 
     public static List<User> getAllRegisteredUsers() throws DataBaseException {
-        if(registeredUsers == null) {
-            throw new DataBaseException("Keine Entities in der Datenbank vorhanden");
-        }
+
+        update();
         return registeredUsers;
     }
 

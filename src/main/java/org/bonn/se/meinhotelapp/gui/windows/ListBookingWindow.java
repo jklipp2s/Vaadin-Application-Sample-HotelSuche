@@ -1,30 +1,71 @@
 package org.bonn.se.meinhotelapp.gui.windows;
 
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.*;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.MenuBar;
+import com.vaadin.ui.Window;
 import org.bonn.se.meinhotelapp.gui.ui.MyUI;
 import org.bonn.se.model.objects.dto.BookingDetail;
 import org.bonn.se.model.objects.entities.User;
 import org.bonn.se.process.control.BookingProcess;
 import org.bonn.se.services.util.Roles;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 public class ListBookingWindow extends Window {
-    List<BookingDetail> liste = new ArrayList<>();
-
+    private List<BookingDetail> liste = new ArrayList<>();
+    private boolean allUsers;
+    private Grid <BookingDetail> data;
 
     public ListBookingWindow() {
         super("Liste Aller Buchungen");
         center();
+        setResizable(false);
         VerticalLayout layout = new VerticalLayout();
+
+
 
         User user = ((MyUI) UI.getCurrent()).getUser();
 
-        liste = user.hasRole(Roles.ADMIN) ? BookingProcess.getInstance().getAllBookings() : BookingProcess.getInstance().getAllBookingsForUser(user);
+        liste = BookingProcess.getInstance().getAllBookingsForUser(user);
 
-        final Grid<BookingDetail> data = new Grid<>();
+        if(user.hasRole(Roles.ADMIN)) {
+            MenuBar adminmenu = new MenuBar();
+            allUsers = false;
+
+
+
+            MenuBar.MenuItem item1 =   adminmenu.addItem("options",VaadinIcons.COG,  null);
+                    item1.addItem("all Users", VaadinIcons.CHECK, new MenuBar.Command() {
+                        @Override
+                        public void menuSelected(MenuBar.MenuItem menuItem) {
+
+                            allUsers = allUsers ==true ? false : true;
+                            if(allUsers == true){ menuItem.setIcon(VaadinIcons.CLOSE);} else {
+                                menuItem.setIcon(VaadinIcons.CHECK);
+                            }
+                            liste.clear();
+                            liste = allUsers == true
+                                    ? BookingProcess.getInstance().getAllBookings()
+                                    : BookingProcess.getInstance().getAllBookingsForUser(user);
+                            data.setItems(liste);
+                            data.setHeightByRows(liste.size());
+
+
+                        }
+                    });
+
+
+            layout.addComponent(adminmenu);
+            layout.setComponentAlignment(adminmenu, Alignment.TOP_RIGHT);
+        }
+
+
+        data = new Grid<BookingDetail>();
         data.addColumn(BookingDetail::getId).setCaption("nr");
         if(user.hasRole(Roles.ADMIN)) data.addColumn(BookingDetail::getCustomername).setCaption("Kunde");
         data.addColumn(BookingDetail::getHotel).setCaption("Hotel");
@@ -95,7 +136,12 @@ public class ListBookingWindow extends Window {
             BookingDetail bookingDetail = (BookingDetail) output.iterator().next();
             BookingProcess.getInstance().deleteBookingByID(bookingDetail.getId());
             liste.clear();
-            liste = BookingProcess.getInstance().getAllBookingsForUser(user);
+            liste = allUsers == true
+                    ? BookingProcess.getInstance().getAllBookings()
+                    : BookingProcess.getInstance().getAllBookingsForUser(user);
+
+
+
             data.setItems(liste);
 
             if(liste.isEmpty()) return;

@@ -30,7 +30,6 @@ public class LoginView extends VerticalLayout implements View {
         loginForm.setWidth("350");
 
 
-        //loginForm.getUI().getContent().
 
         VerticalLayout verticalLayout = new VerticalLayout(label,loginForm);
         double panelwidth = loginForm.getWidth();

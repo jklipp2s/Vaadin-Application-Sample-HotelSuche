@@ -14,6 +14,7 @@ public class BookingWindow extends Window {
 
         super("Buchung");
         center();
+        setResizable(false);
 
         VerticalLayout content = new VerticalLayout();
         content.addComponent(new Label("Buchung für Hotel: " + hotel.getName()));

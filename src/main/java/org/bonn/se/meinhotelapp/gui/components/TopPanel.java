@@ -5,6 +5,7 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.meinhotelapp.gui.ui.MyUI;
 import org.bonn.se.meinhotelapp.gui.windows.ListBookingWindow;
+import org.bonn.se.meinhotelapp.gui.windows.PortalUserWindow;
 import org.bonn.se.model.objects.entities.User;
 import org.bonn.se.process.control.LoginControl;
 import org.bonn.se.services.util.Roles;
@@ -41,7 +42,7 @@ public class TopPanel extends HorizontalLayout {
         //horizontalLayout.setComponentAlignment(loggedLabel, Alignment.MIDDLE_CENTER);
 
         MenuBar bar = new MenuBar();
-        MenuBar.MenuItem item1 = bar.addItem("Menu", null);
+        MenuBar.MenuItem item1 = bar.addItem("Menu", VaadinIcons.LINES, null);
         bar.setWidthUndefined();
 
         item1.addItem("Logout", VaadinIcons.SIGN_OUT, new MenuBar.Command() {
@@ -62,7 +63,22 @@ public class TopPanel extends HorizontalLayout {
         }
 
 
+
+
+
         if(user.hasRole(Roles.ADMIN)){
+
+            item1.addItem("PortalNutzer", VaadinIcons.EYE, new MenuBar.Command() {
+                @Override
+                public void menuSelected(MenuBar.MenuItem menuItem) {
+                    PortalUserWindow portalUserWindow = new PortalUserWindow();
+
+                    UI.getCurrent().addWindow(portalUserWindow);
+                }
+            });
+
+
+
         }
 
 

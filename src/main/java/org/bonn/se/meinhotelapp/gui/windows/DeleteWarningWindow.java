@@ -14,13 +14,8 @@ public class DeleteWarningWindow extends Window {
 
     this.setStyleName("DeleteWarningWindow");
 
-    /*
-        this.setHeight("200px");
-        this.setWidthUndefined();
-        this.setWidth("350px");
-
-     */
         center();
+        setResizable(false);
         VerticalLayout verticalLayout = new VerticalLayout();
 
         Label  label = new Label("Wollen Sie die Buchung wirklich\n stornieren?");
