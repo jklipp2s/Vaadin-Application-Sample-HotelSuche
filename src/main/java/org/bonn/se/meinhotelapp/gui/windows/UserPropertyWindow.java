@@ -1,5 +1,6 @@
 package org.bonn.se.meinhotelapp.gui.windows;
 
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.*;
 import org.bonn.se.model.objects.entities.User;
 import org.bonn.se.process.control.JDBC.Repositories.UserRepository;
@@ -12,7 +13,10 @@ import java.util.List;
 
 public class UserPropertyWindow extends Window {
     public UserPropertyWindow(User user, Grid<User> grid) {
-        super("UserProperties");
+        super("  UserProperties");
+        this.setIcon(VaadinIcons.COG);
+        this.setResizable(false);
+        this.setStyleName("userpropertywindow");
         center();
         VerticalLayout layout = new VerticalLayout();
         layout.addComponent(new Label("Id: " +user.getId()));

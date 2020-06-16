@@ -30,6 +30,8 @@ public class MyLoginForm extends LoginForm {
       this.loginButton = loginButton;
 
 
+      this.loginButton.addStyleName("loginbutton");
+
      VerticalLayout output =(VerticalLayout) super.createContent(userNameField, passwordField, loginButton);
 
      output.setComponentAlignment(loginButton, Alignment.MIDDLE_CENTER);

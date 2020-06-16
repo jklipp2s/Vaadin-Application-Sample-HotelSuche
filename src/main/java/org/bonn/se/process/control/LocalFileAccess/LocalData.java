@@ -92,7 +92,7 @@ public class LocalData {
         UserRepository.getAllRegisteredUsers().forEach(user -> {
 
             try {
-                UserRepository.registerUser(user.getId(), user.getName(), user.getPrename(), user.getUsername(),user.getPassword());
+                UserRepository.registerUser(user.getId(), user.getName(),user.getEmail(), user.getPrename(), user.getUsername(),user.getPassword());
             } catch (DataBaseException e) {
                 e.printStackTrace();
             }

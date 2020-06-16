@@ -27,7 +27,7 @@ public class MainView extends VerticalLayout implements View {
     this.setId("MainView");
     this.setStyleName("Main");
     this.setSizeFull();
-    //this.addComponent(new Label("<hr />", ContentMode.HTML));
+
 
 
 

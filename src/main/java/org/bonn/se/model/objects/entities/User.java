@@ -17,6 +17,7 @@ public class User implements Serializable {
     private String name;
     private String prename;
     private String username;
+    private String email;
     private String password;
     private List<String> roles;
 
@@ -34,14 +35,14 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public User(String name, String prename, String username, String password) throws DataBaseException {
+    public User(String name, String prename, String email, String username, String password) throws DataBaseException {
         this.id = UserRepository.getNextId()+1;
         this.name = name;
         this.prename = prename;
         this.username = username;
         this.password = password;
 
-        UserRepository.registerUser(id, name, prename, username, password);
+        UserRepository.registerUser(id, name, prename, email, username, password);
 
 
 
@@ -65,6 +66,10 @@ public class User implements Serializable {
     public String getUsername() {
         return username;
     }
+
+    public String getEmail() { return email; }
+
+    public void setEmail(String email) { this.email = email; }
 
     public String getPassword() { return password; }
 
@@ -103,6 +108,8 @@ public class User implements Serializable {
         }
         return result;
     }
+
+
 
 
 

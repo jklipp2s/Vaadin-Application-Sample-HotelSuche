@@ -2,6 +2,7 @@ package org.bonn.se.meinhotelapp.gui.components;
 
 
 import com.vaadin.data.ValueProvider;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.*;
 import org.bonn.se.meinhotelapp.gui.windows.PortalUserWindow;
 import org.bonn.se.meinhotelapp.gui.windows.UserPropertyWindow;
@@ -24,12 +25,15 @@ public  class GridCallbackValueProvider
 
     @Override
     public Layout apply(User user) {
-        HorizontalLayout al = new HorizontalLayout(new Label("bearbeiten"));
+        HorizontalLayout al = new HorizontalLayout();
+        Button button = new Button();
 
-        //al.setWidth("100px");
-        //al.setHeight("30px");
-        al.addStyleName(((user.hasRole(Roles.NORMAL_USER)) ? "blue bearbeiten" : "red bearbeiten" ));
-        al.addLayoutClickListener( clickEvent -> {
+        al.addComponent(button);
+       
+        button.setIcon(user.hasRole(Roles.ADMIN) ? VaadinIcons.KEY_O :
+                   user.hasRole(Roles.NORMAL_USER) ? VaadinIcons.SMILEY_O  : VaadinIcons.FROWN_O);
+        button.addStyleName(((user.hasRole(Roles.NORMAL_USER)) ? "blue" : "red" ));
+        button.addClickListener( clickEvent -> {
             UserPropertyWindow userPropertyWindow = new UserPropertyWindow(user, grid);
             UI.getCurrent().addWindow(userPropertyWindow);
 

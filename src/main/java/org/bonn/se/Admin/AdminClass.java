@@ -12,6 +12,7 @@ import org.bonn.se.process.control.LocalFileAccess.LocalData;
 import org.bonn.se.process.control.exceptions.DataBaseException;
 import org.bonn.se.services.util.ConnectionTypes;
 import org.bonn.se.services.util.Roles;
+import org.bonn.se.services.util.TableNames;
 
 import java.io.IOException;
 
@@ -26,13 +27,8 @@ public class AdminClass {
             DataBaseConnection.setUPConnection(ConnectionTypes.CONNECTION_TYPE_PostgreSQL);
 
 
-            UserRepository.update();
 
-            User user = UserRepository.getAllRegisteredUsers().get(0);
 
-            boolean test = user.getRoles().contains(Roles.ADMIN);
-
-            System.out.println(test);
 
         } catch (DataBaseException e) {
 

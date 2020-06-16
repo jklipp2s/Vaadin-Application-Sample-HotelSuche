@@ -1,5 +1,6 @@
 package org.bonn.se.meinhotelapp.gui.windows;
 
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -14,8 +15,8 @@ public class PortalUserWindow extends Window {
     private Grid<User> data;
     List<User> list;
     public PortalUserWindow() {
-        super("Alle Nutzer Auf einen Blick!");
-
+        super(" Alle Nutzer Auf einen Blick!");
+        this.setIcon(VaadinIcons.USER_CHECK);
         center();
         this.setSizeFull();
         setResizable(false);
@@ -26,9 +27,10 @@ public class PortalUserWindow extends Window {
 
         data = new Grid<>();
         data.setStyleName("usergrid");
-        data.addColumn(User::getId).setCaption("nr");
+        data.addColumn(User::getId).setCaption("nr").setWidth(50);
         data.addColumn(User::getUsername).setCaption("Username");
         data.addColumn(User::getFullname).setCaption("Name");
+        data.addColumn(User::getEmail).setCaption("Email");
         data.addColumn(User::getRolesAsList).setCaption("hinterlegt als");
         data.setSelectionMode(Grid.SelectionMode.SINGLE);
         data.setSizeFull();
@@ -41,7 +43,7 @@ public class PortalUserWindow extends Window {
 
         data.setItems(list);
         data.setHeightByRows(list.size());
-        data.addComponentColumn(new GridCallbackValueProvider(data)).setCaption("status").setId("status").setWidth(140);
+        data.addComponentColumn(new GridCallbackValueProvider(data)).setCaption("status").setId("status").setWidth(85);
 
 
 

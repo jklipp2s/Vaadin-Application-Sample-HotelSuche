@@ -22,7 +22,8 @@ public class ListBookingWindow extends Window {
     private Grid <BookingDetail> data;
 
     public ListBookingWindow() {
-        super("Liste Aller Buchungen");
+        super(" Liste Aller Buchungen");
+        this.setIcon(VaadinIcons.TABLE);
         center();
         setResizable(false);
         VerticalLayout layout = new VerticalLayout();
@@ -39,8 +40,8 @@ public class ListBookingWindow extends Window {
 
 
 
-            MenuBar.MenuItem item1 =   adminmenu.addItem("options",VaadinIcons.COG,  null);
-                    item1.addItem("all Users", VaadinIcons.CHECK, new MenuBar.Command() {
+            MenuBar.MenuItem item1 =   adminmenu.addItem("Options",VaadinIcons.COG,  null);
+                    item1.addItem("All Bookings", VaadinIcons.CHECK, new MenuBar.Command() {
                         @Override
                         public void menuSelected(MenuBar.MenuItem menuItem) {
 
@@ -53,7 +54,8 @@ public class ListBookingWindow extends Window {
                                     ? BookingProcess.getInstance().getAllBookings()
                                     : BookingProcess.getInstance().getAllBookingsForUser(user);
                             data.setItems(liste);
-                            data.setHeightByRows(liste.size());
+
+                            if(liste.size()>0) data.setHeightByRows(liste.size());
 
 
                         }

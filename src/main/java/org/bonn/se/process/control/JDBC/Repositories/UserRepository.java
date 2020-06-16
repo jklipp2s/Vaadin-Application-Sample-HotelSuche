@@ -54,8 +54,10 @@ public abstract class UserRepository {
                     //int id = resultSet.getInt("id");
                     String prename = resultSet.getString("prename");
                     String username = resultSet.getString("username");
+                    String email = resultSet.getString("email");
                     String password = resultSet.getString("password");
                     loginUser = User.getreducedUser(prename,username,password);
+                    loginUser.setEmail(email);
 
                 }
 
@@ -76,12 +78,12 @@ public abstract class UserRepository {
 
 
 
-    public static void registerUser(int id, String name, String prename,  String username, String password) throws DataBaseException {
+    public static void registerUser(int id, String name, String prename, String email,  String username, String password) throws DataBaseException {
 
         Connection newConnection = DataBaseConnection.getSqlConnection();
         Statement sqlStatement = DataBaseConnection.getStatement();
 
-        String sqlCommand = "INSERT INTO " + table + "  VALUES ('" + id + "','" + name + "','" + prename + "','" + username  + "','" + password + "');";
+        String sqlCommand = "INSERT INTO " + table + "  VALUES ('" + id + "','" + name + "','" + prename + "','" + username  + "','" + email +"','" + password + "');";
 
         try {
             sqlStatement.executeUpdate(sqlCommand);
@@ -194,8 +196,10 @@ public abstract class UserRepository {
                 String name = resultSet.getString("name");
                 String prename = resultSet.getString("prename");
                 String username = resultSet.getString("username");
+                String email = resultSet.getString("email");
                 String password = resultSet.getString("password");
                 User input = new User(id, name, prename, username, password);
+                input.setEmail(email);
                 registeredUsers.add(input);
             }
 
@@ -223,6 +227,71 @@ public abstract class UserRepository {
         update();
         return registeredUsers;
     }
+
+
+
+    public static boolean userIsAlreadyDefined(String user) throws DataBaseException {
+        User loginUser = null;
+
+
+        Connection newConnection = DataBaseConnection.getSqlConnection();
+        Statement sqlStatement = DataBaseConnection.getStatement();
+        ResultSet resultSet = null;
+        boolean userIsAlreadyDefined = false;
+
+        String sqlCommand = "SELECT * FROM " + table + " WHERE username = BINARY '" + user + "'";
+
+        if(DataBaseConnection.getConnectionType().equals(ConnectionTypes.CONNECTION_TYPE_PostgreSQL)) sqlCommand = "SELECT * FROM " + table + " WHERE username = '" + user + "'";
+
+        try {
+            resultSet = sqlStatement.executeQuery(sqlCommand);
+
+            userIsAlreadyDefined = resultSet.next();
+
+        } catch (SQLException e) {
+            new DataBaseException("Fehler beim Suchen eines Users");
+            e.printStackTrace();
+        }
+
+        finally{
+            DataBaseConnection.closeConnection();
+        }
+
+        return userIsAlreadyDefined;
+    }
+
+
+
+    public static boolean emailIsAlreadyUsed(String email) throws DataBaseException {
+        User loginUser = null;
+
+
+        Connection newConnection = DataBaseConnection.getSqlConnection();
+        Statement sqlStatement = DataBaseConnection.getStatement();
+        ResultSet resultSet = null;
+        boolean emailIsAlreadyUsed = false;
+
+        String sqlCommand = "SELECT * FROM " + table + " WHERE email =  '" + email + "'";
+
+        if (DataBaseConnection.getConnectionType().equals(ConnectionTypes.CONNECTION_TYPE_PostgreSQL))
+            sqlCommand = "SELECT * FROM " + table + " WHERE email = '" + email + "'";
+
+        try {
+            resultSet = sqlStatement.executeQuery(sqlCommand);
+
+            emailIsAlreadyUsed = resultSet.next();
+
+        } catch (SQLException e) {
+            new DataBaseException("Fehler beim Suchen eines Users");
+            e.printStackTrace();
+        } finally {
+            DataBaseConnection.closeConnection();
+        }
+
+        return emailIsAlreadyUsed;
+
+    }
+
 
 
 

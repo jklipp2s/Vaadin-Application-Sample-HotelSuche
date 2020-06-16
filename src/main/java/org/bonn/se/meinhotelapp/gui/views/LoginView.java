@@ -3,6 +3,7 @@ package org.bonn.se.meinhotelapp.gui.views;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
+import org.bonn.se.meinhotelapp.gui.components.MinimizedTopBar;
 import org.bonn.se.meinhotelapp.gui.components.MyLoginForm;
 import org.bonn.se.meinhotelapp.gui.ui.MyUI;
 import org.bonn.se.model.objects.entities.User;
@@ -43,8 +44,8 @@ public class LoginView extends VerticalLayout implements View {
         panel.setWidth(String.valueOf(panelwidth));
 
 
-
         this.addComponent(panel);
+
         this.setComponentAlignment(panel, Alignment.MIDDLE_CENTER);
 
 

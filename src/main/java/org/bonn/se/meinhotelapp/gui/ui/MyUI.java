@@ -10,8 +10,10 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
+import org.bonn.se.meinhotelapp.gui.views.LandingPage;
 import org.bonn.se.meinhotelapp.gui.views.LoginView;
 import org.bonn.se.meinhotelapp.gui.views.MainView;
+import org.bonn.se.meinhotelapp.gui.views.RegistrationView;
 import org.bonn.se.model.objects.entities.User;
 import org.bonn.se.services.util.Views;
 
@@ -43,8 +45,10 @@ public class MyUI extends UI {
         Navigator navi = new Navigator(this,this);
         navi.addView(Views.MAIN, MainView.class);
         navi.addView(Views.LOGIN, LoginView.class);
+        navi.addView(Views.LANDINGPAGE, LandingPage.class);
+        navi.addView(Views.REGISTRATION, RegistrationView.class);
 
-        getCurrent().getNavigator().navigateTo(Views.LOGIN);
+        getCurrent().getNavigator().navigateTo(Views.LANDINGPAGE);
     }
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)

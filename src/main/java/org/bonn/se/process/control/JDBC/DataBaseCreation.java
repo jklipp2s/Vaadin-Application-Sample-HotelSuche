@@ -65,6 +65,7 @@ public class DataBaseCreation {
                 "  name VARCHAR(35) NOT NULL,\n" +
                 "  prename VARCHAR (35) NOT NULL,\n" +
                 "  username VARCHAR(35),\n" +
+                "  email VARCHAR(60) not NULL,\n" +
                 "  password VARCHAR(16) NOT NULL,\n  " +
                 "  UNIQUE (id), \n " +
                 "  PRIMARY KEY (username) );";
